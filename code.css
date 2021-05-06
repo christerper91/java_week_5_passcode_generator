@@ -8,6 +8,7 @@ body {
   display: center;
   image-orientation: center;
   border: 2px solid black;
+  background-color: #92a8d1;
 }
 
 .image-logo {
