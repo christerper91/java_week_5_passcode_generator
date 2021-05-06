@@ -5,10 +5,15 @@ let history_board = document.querySelector('.passcode_history')
 let clearAll_button = document.getElementById('clearAll_button')
 let delete_record = []
 let restore_button = document.getElementById('restore_button')
+let timer_display = document.querySelector('.timer_display')
+let timer = 10
+
+
 
 button.addEventListener('click', generateNumber);
 clearAll_button.addEventListener('click', clearAllRecord);
 restore_button.addEventListener('click', restoreRecord);
+
 
 function generateNumber() {
   let sevenDigits = '';
@@ -40,17 +45,43 @@ function clearAllRecord() {
  let records = document.querySelectorAll('.passcode_record');
  records.forEach(function(record) {
    history_board.removeChild(record)
- });
  storeDeletedRecord(record)
+});
+
 }
 
 function storeDeletedRecord(record) {
  delete_record.push(record)
+ startTimer()
+ // timer = 10
 }
 
 function restoreRecord() {
   delete_record.forEach(function(record) {
     history_board.appendChild(record)
   });
+  restore_button.style.display = 'none';
+  clearAll_button.style.display = 'inline';
+  delete_record = [];
+  timer = 0;
+}
 
+function startTimer() {
+  restore_button.style.display = 'inline'
+  timer_display.style.display = 'inline'
+
+ let runTimer = setInterval(function(){
+   if (timer > 0){
+     timer -=1
+     timer_display.innerHTML = `${timer} seconds to go restore data`
+   }
+   else{
+     clearInterval(runTimer)
+     restore_button.style.display = 'none'
+     timer_display.style.display = 'none'
+     timer = 10
+     delete_record = []
+   };
+ }, 1000);
+ console.log(startTimer);
 }
